@@ -1,9 +1,0 @@
-<server>
-	<!-- Client side -->
-	<script src="client-scripts/draw.nut" type="client" />
-	<script src="client-scripts/inventory.nut" type="client" />
-	
-	<!-- Server side -->
-	<script src="server-scripts/loginout.nut" type="server" />
-	<script src="server-scripts/test.nut" type="server" />
-</server>

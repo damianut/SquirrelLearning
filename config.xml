@@ -25,7 +25,8 @@
 	<script src="examples/server-scripts/packets.nut" type="server" />
 	
 	<!-- Test -->
-	<import src="nauka/scripts.xml" />
+	<import src="gui-framework/gui.xml" />
+	<import src="custom/scripts.xml" />
 	
 	<!-- Ids -->
 	<items src="items.xml" />
