@@ -1,6 +1,5 @@
 <server>
-	<!-- <script src="window_login/window.nut" type="client" /> -->
+	<script src="main.nut" type="server" />
 	<script src="window_login/window_register.nut" type="client" />
 	<script src="window_login/window_login.nut" type="client" />
-	<!-- <script src="window_login/main.nut" type="client" /> -->
 </server>

@@ -1,0 +1,4 @@
+enum PacketId
+{
+	REGISTER_CHECK_PWDLOGIN
+}
