@@ -16,13 +16,13 @@
 	
 	<!-- Gamemode -->
 	<import src="gamemodes/prototype/scripts.xml" />
-	<script src="examples/client-scripts/camera.nut" type="client" />
-	<script src="examples/client-scripts/mouse.nut" type="client" />
-	<script src="examples/client-scripts/npc.nut" type="client" />
-	<script src="examples/client-scripts/itemrender.nut" type="client" />
-	<script src="examples/client-scripts/sounds.nut" type="client" />
-	<script src="examples/client-scripts/packets.nut" type="client" />
-	<script src="examples/server-scripts/packets.nut" type="server" />
+	<!-- <script src="examples/client-scripts/camera.nut" type="client" /> -->
+	<!-- <script src="examples/client-scripts/mouse.nut" type="client" /> -->
+	<!-- <script src="examples/client-scripts/npc.nut" type="client" /> -->
+	<!-- <script src="examples/client-scripts/itemrender.nut" type="client" /> -->
+	<!-- <script src="examples/client-scripts/sounds.nut" type="client" /> -->
+	<!-- <script src="examples/client-scripts/packets.nut" type="client" /> -->
+	<!-- <script src="examples/server-scripts/packets.nut" type="server" /> -->
 	
 	<!-- Test -->
 	<import src="gui-framework/gui.xml" />

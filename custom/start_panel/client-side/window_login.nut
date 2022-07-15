@@ -15,9 +15,12 @@ addEventHandler("onInit",function()
 {
 	setCursorVisible(true)
 	window.setVisible(true)
-	buttonExitInfo.setVisible(false)
 	loginInput.setDisabled(false)
+	passwordInput.setVisible(true)
+	//Q: Czemu trzeba ustawiæ akurat ten input osobno na "visible"; a ¿eby by³o widaæ resztê, wystarczy³o ustawiæ na "visible" 'window'?
+	//Q c.d.: Bo by³ to ostatni zdefiniowany input?
 	passwordInput.setDisabled(false)
+	buttonExitInfo.setVisible(false)
 })
 
 addEventHandler("GUI.onClick", function(self)
@@ -26,7 +29,7 @@ addEventHandler("GUI.onClick", function(self)
 	{
 		case buttonClose:
 			exitGame()
-				break
+			break
 	}
 })
 

@@ -11,6 +11,12 @@ local buttonRegisterLeftBottomCorner = GUI.Button(0, any(250), anx(150), any(50)
 local buttonRegisterDo = GUI.Button(anx(150), any(250), anx(350), any(50), "INV_SLOT_FOCUS.TGA", "ZAREJESTRUJ", windowRegister)
 local buttonRegisterExitInfo = GUI.Button(anx(500), -any(50), anx(150), any(50), "INV_SLOT_FOCUS.TGA", "WyjdŸ z gry", windowRegister)
 
+local windowFeedback = GUI.Window(4096 - anx(250), 4096 - any(325), anx(500), any(300), "MENU_INGAME.TGA", null, true)
+local buttonRegisterStatusInfoClose = GUI.Button(anx(450), 0, anx(50), any(25), "INV_SLOT_FOCUS.TGA", "X", windowFeedback)
+local drawRegisterStatusInfo = GUI.Draw(anx(90), any(120), "", windowFeedback)
+
+local registrationAccountClient = null;
+
 addEventHandler("onInit",function()
 {
 	setCursorVisible(true)
@@ -18,47 +24,8 @@ addEventHandler("onInit",function()
 	buttonRegisterExitInfo.setVisible(false)
 	registerLoginInput.setDisabled(false)
 	registerPasswordInput.setDisabled(false)
+	windowFeedback.setVisible(false)
 })
-
-/*
- * Registration
- *
- * //TODO: Przenieœæ do osobnego pliku?
- */
-class Register
-{
-	r_login = "";
-	r_pwd = "";
-	
-	static function processRegistration (loginInput, pwdInput)
-	{
-		r_login = loginInput.getText();
-		r_pwd = pwdInput.getText();
-		
-		local packet = new Packet();
-		
-		packet.writeUInt16(PacketId.REGISTER_CHECK_PWDLOGIN);
-		packet.write
-		
-		packet.send(RELIABLE);
-	}
-	static function checkLoginConstraints (login)
-	{
-		return (
-			(4 <= login.len()) &&
-			(15 >= login.len()) &&
-			//Czy tutaj te¿ daæ wyra¿enie regularne?
-		);
-	}
-	static function checkPwdConstraints (pwd)
-	{
-		return (
-			(8 <= login.len()) &&
-			(20 >= login.len()) &&
-		
-		);
-	}
-}
 
 addEventHandler("GUI.onClick", function(self)
 {
@@ -66,39 +33,80 @@ addEventHandler("GUI.onClick", function(self)
 	{
 		case buttonRegisterClose:
 			exitGame()
-				break
+			break
+			
 		case buttonRegisterDo:
-			processRegistration(registerLoginInput, registerPasswordInput)
+			registrationAccountClient = RegisterAccountClient(registerLoginInput, registerPasswordInput)
+			registrationAccountClient.processRegistration()
+			break
+		
+		case buttonRegisterStatusInfoClose:
+			if (windowFeedback.getVisible())
+			{
+				drawRegisterStatusInfo.setText("")
+				windowFeedback.setVisible(false)
+				windowRegister.setVisible(true);
+			}
 			break
 	}
 })
 
 addEventHandler("GUI.onMouseIn", function(self)
 {
-	if (!(self instanceof GUI.Button))
-		return
+	switch (self)
+	{
+		case buttonRegisterDo:
+			self.setColor(255, 0, 0)
+			break
 		
-	if (self == buttonRegisterDo)
-	{
-		self.setColor(255, 0, 0)
-	} else if (self == buttonRegisterClose)
-	{
-		self.setColor(255, 0, 0)
-		buttonRegisterExitInfo.setVisible(true)
+		case buttonRegisterClose:
+			self.setColor(255, 0, 0)
+			buttonRegisterExitInfo.setVisible(true)
+			break
+			
+		case buttonRegisterStatusInfoClose:
+			if (buttonRegisterStatusInfoClose.getVisible())
+			{
+				self.setColor(255, 0, 0)
+			}
+			break;
 	}
 })
 
 addEventHandler("GUI.onMouseOut", function(self)
 {
-	if (!(self instanceof GUI.Button))
-		return
-	
-	if (self == buttonRegisterDo)
+	switch (self)
 	{
-		self.setColor(255, 255, 255)
-	} else if (self == buttonRegisterClose)
+		case buttonRegisterDo:
+			self.setColor(255, 255, 255)
+			break
+		
+		case buttonRegisterClose:
+			self.setColor(255, 255, 255)
+			buttonRegisterExitInfo.setVisible(false)
+			break
+			
+		case buttonRegisterStatusInfoClose:
+			if (buttonRegisterStatusInfoClose.getVisible())
+			{
+				self.setColor(255, 255, 255)
+			}
+			break;
+	}
+})
+//Get and display data from server about registration request.
+addEventHandler("onPacket", function(packet) {
+	Chat.print(0, 255, 0, "again");
+	local packetId = packet.readUInt16();
+	Chat.print(0, 255, 0, "agains");
+	switch (packetId)
 	{
-		self.setColor(255, 255, 255)
-		buttonRegisterExitInfo.setVisible(false)
+		case PacketsIds.REGISTER_PWDLOGIN_TO_CLIENT_RESPONSE:
+			Chat.print(0, 255, 0, "againss");
+			drawRegisterStatusInfo.setText(packet.readString());
+			windowRegister.setVisible(false);
+			windowFeedback.setVisible(true);
+			buttonRegisterStatusInfoClose.setVisible(true);
+			break;
 	}
 })

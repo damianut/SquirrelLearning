@@ -1,5 +1,10 @@
 <server>
 	<script src="main.nut" type="server" />
-	<script src="window_login/window_register.nut" type="client" />
-	<script src="window_login/window_login.nut" type="client" />
+	<script src="main.nut" type="client" />
+	<script src="start_panel_process/registration_common.nut" type="server" />
+	<script src="start_panel_process/registration_common.nut" type="client" />
+	<script src="start_panel_process/server-side/registration.nut" type="server" />
+	<script src="start_panel_process/client-side/registration.nut" type="client" />
+	<script src="start_panel/client-side/window_register.nut" type="client" />
+	<script src="start_panel/client-side/window_login.nut" type="client" />
 </server>

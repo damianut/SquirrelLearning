@@ -2,7 +2,8 @@ function onInit()
 {
 	enableEvent_Render(true)
 
-	Chat.print(0, 255, 0, "Welcome on " + getHostname() + "!")
+	setKeyLayout(KEY_LAYOUT_PL)
+	Chat.print(0, 255, 0, "No siema w " + getHostname() + "!")
 }
 
 addEventHandler("onInit", onInit)
