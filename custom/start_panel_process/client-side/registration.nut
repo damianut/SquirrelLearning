@@ -1,41 +1,29 @@
-//Registration
-class RegisterAccountClient extends RegisterAccountCommon
-{
-	_input_login = null;
-	_input_pwd = null;
-	
-	constructor (input_login_param, input_pwd_param)
-	{
-		Chat.print(0, 255, 0, "No siema: 1");
-		_input_login = input_login;
-		_input_pwd = input_pwd;
-		base.constructor(input_login.getText(), input_pwd.getText());
+// Registration: client side table
+registerAccountClient <- {};
+
+// Extending table by setting delegate and...
+registerAccountClient.setdelegate(processPanelCommon);
+
+// ...creating or rewriting properties and methods.
+registerAccountClient._input_login <- null;
+registerAccountClient._input_pwd <- null;
+registerAccountClient.init <- function (input_login, input_pwd) {
+	_input_login = input_login;
+	_input_pwd = input_pwd;
+	_login = _input_login.getText();
+	_pwd = _input_pwd.getText();
+};
+registerAccountClient.refreshInputsData <- function () {
+	if (_input_login && _input_pwd) {
+		_login = _input_login.getText();
+		_pwd = _input_pwd.getText();
 	}
-	
-	function processRegistration()
-	{
-		Chat.print(0, 255, 0, "No siema: 2");
-		//Check constraints of login and password.
-		if (!_checkLoginConstraints())
-		{
-			Chat.print(0, 255, 0, "No siema: 2 1");
-			_input_login.setText("");
-			//The password is removed so that the player does not forget what he typed.
-			_input_pwd.setText("");
-			return msgs[0];
-		}
-		Chat.print(0, 255, 0, "No siema: 3");
-		if (!_checkPwdConstraints())
-		{
-			_input_pwd.setText("");
-			return msgs[1];
-		};
-		Chat.print(0, 255, 0, "No siema: 4");
-		local packet = Packet();
-		packet.writeUInt16(PacketsIds.REGISTER_PWDLOGIN_TO_SERVER);
-		packet.writeString(login);
-		packet.writeString(pwd);
+};
+registerAccountClient.sendRequestToServer <- function () {
+	local packet = Packet();
+	packet.writeUInt16(PacketsIds.REGISTER_PWDLOGIN_TO_SERVER);
+	packet.writeString(_login);
+	packet.writeString(_pwd);
 		
-		packet.send(RELIABLE);
-	}
-}
+	packet.send(RELIABLE);
+};
