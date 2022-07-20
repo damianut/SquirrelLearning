@@ -1,9 +1,8 @@
 function onInit()
 {
-	enableEvent_Render(true)
-
-	setKeyLayout(KEY_LAYOUT_PL)
-	Chat.print(0, 255, 0, "No siema w " + getHostname() + "!")
+    setKeyLayout(KEY_LAYOUT_PL);
+	enableEvent_Render(true); // Enable execution of eventRender (on each frame).
+    // DEV Chat.setVisible(false); // Player can see chat after login account.
 }
 
 addEventHandler("onInit", onInit)

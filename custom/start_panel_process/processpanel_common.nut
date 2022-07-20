@@ -1,58 +1,58 @@
-processPanelCommon <- {
-    "_msgs" : [
-		"Login should contains from 4 to 15 chars.", // "Login powinien zawierać od 4 do 15 znaków"
-		"Password should contains from 8 to 20 chars." // "Hasło powinno zawierać od 8 do 20 znaków"
-	],
-    "_login" : null,
-    "_pwd" : null,
-    "_feedbackMsg" : null,
-    "_tmp_feedbackMsg" : null,
+// Base class for handling register and login account requests.
+class ProcessPanelCommon {
+    _msgs = [
+        "Login should contains from 4 to 15 chars.", // "Login powinien zawierać od 4 do 15 znaków."
+        "Password should contains from 8 to 20 chars.", // "Hasło powinno zawierać od 8 do 20 znaków."
+        "The account has been created.", // "Konto zostało utworzone."
+        "The given login is taken.", // "Podany login jest zajęty."
+        "The account with given login isn't exist.", //"Konto z podanym loginem nie istnieje."
+        "Given password isn't correct." // "Podane hasło jest nieprawdiłowe."
+    ];
+    _login = null;
+    _pwd = null;
+    _feedbackMsg = null;
+    _tmp_feedbackMsg = null;
     
-    "init" : function (login, pwd) {
+    constructor (login, pwd) {
         _login = login;
         _pwd = pwd;
-    },
+    }
     
-    "refresh" : function (login, pwd) {
-        init(login, pwd);
-    },
+    function refresh (login, pwd) {
+        _login = login;
+        _pwd = pwd;
+    }
     
     // This function return and erase property with message.
-    "getFeedbackMsg" : function () {
+    function getFeedbackMsg () {
         _tmp_feedbackMsg = _feedbackMsg;
         _feedbackMsg = null;
         return _tmp_feedbackMsg;
-    },
+    }
     
-    "checkRequirements" : function () {
+    function checkLoginPwdRequirements () {
         local _satisfied = true;
         //Check constraints of login and password.
         if (!_checkLoginConstraints()) {
-            _input_login.setText("");
-            //The password is removed so that the player does not forget what he typed.
-            _input_pwd.setText("");
             _feedbackMsg = _msgs[0];
             _satisfied = false;
         } else if (!_checkPwdConstraints()) {
-            _input_pwd.setText("");
             _feedbackMsg = _msgs[1];
             _satisfied = false;
         }
         return _satisfied;
-    },
+    }
     
     // -------------------- PRIVATE METHODS -------------------- //
-    "_checkLoginConstraints" : function ()
-    {
+    function _checkLoginConstraints () {
         return (
             (4 <= _login.len()) &&
             (15 >= _login.len())// &&
             //Czy tutaj też dać wyrażenie regularne?
         );
-    },
+    }
     
-    "_checkPwdConstraints" : function ()
-    {
+    function _checkPwdConstraints () {
         return (
             (8 <= _pwd.len()) &&
             (20 >= _pwd.len())// &&

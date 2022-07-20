@@ -1,9 +1,12 @@
+// -------------------- BACKGROUND IMAGE -------------------- //
+local bgImage = GUI.Texture(0, 0, 8192, 8192, "DACH.TGA")
+
 // -------------------- WINDOWS -------------------- //
 // Register window
 local windowRegister = GUI.Window(4096 - anx(250), 4096 - any(325), anx(500), any(300), "MENU_INGAME.TGA", null, true);
 local buttonRegisterLeftUpperCorner = GUI.Button(0, 0, anx(50), any(50), "INV_SLOT_FOCUS.TGA", "", windowRegister);
 local buttonRegisterUpperInfo = GUI.Button(anx(50), 0, anx(400), any(50), "INV_SLOT_FOCUS.TGA", "REJESTRACJA", windowRegister);
-local buttonRegisterClose = GUI.Button(anx(450), 0, anx(50), any(50), "INV_SLOT_FOCUS.TGA", "X", windowRegister);
+local buttonRegisterExit = GUI.Button(anx(450), 0, anx(50), any(50), "INV_SLOT_FOCUS.TGA", "X", windowRegister);
 local buttonRegisterLoginInfo = GUI.Button(0, any(50), anx(150), any(100), "INV_SLOT_FOCUS.TGA", "LOGIN", windowRegister);
 local registerLoginInput = GUI.Input(anx(150), any(50), anx(348), any(98), "DLG_CONVERSATION.TGA", "FONT_OLD_20_WHITE_HI.TGA", Input.Text, Align.Center, ">               ", 2, windowRegister);
 local buttonRegisterPwdInfo = GUI.Button(0, any(150), anx(150), any(100), "INV_SLOT_FOCUS.TGA", "HAS£O", windowRegister);
@@ -14,90 +17,110 @@ local buttonRegisterExitInfo = GUI.Button(anx(500), -any(50), anx(150), any(50),
 
 // Login window
 local windowLogin = GUI.Window(4096 - anx(250), 4096 + any(25), anx(500), any(300), "MENU_INGAME.TGA", null, true);
-local buttonLeftUpperCorner = GUI.Button(0, 0, anx(50), any(50), "INV_SLOT_FOCUS.TGA", "", windowLogin);
-local buttonUpperInfo = GUI.Button(anx(50), 0, anx(400), any(50), "INV_SLOT_FOCUS.TGA", "LOGOWANIE", windowLogin);
-local buttonClose = GUI.Button(anx(450), 0, anx(50), any(50), "INV_SLOT_FOCUS.TGA", "X", windowLogin);
-local buttonLoginInfo = GUI.Button(0, any(50), anx(150), any(100), "INV_SLOT_FOCUS.TGA", "LOGIN", windowLogin);
-local loginInput = GUI.Input(anx(150), any(50), anx(348), any(98), "DLG_CONVERSATION.TGA", "FONT_OLD_20_WHITE_HI.TGA", Input.Text, Align.Center, ">               ", 2, windowLogin);
-local buttonPwdInfo = GUI.Button(0, any(150), anx(150), any(100), "INV_SLOT_FOCUS.TGA", "HAS£O", windowLogin);
-local passwordInput = GUI.Input(anx(150), any(150), anx(348), any(98), "DLG_CONVERSATION.TGA", "FONT_OLD_20_WHITE_HI.TGA", Input.Password, Align.Center, ">               ", 2, windowLogin);
-local buttonLeftBottomCorner = GUI.Button(0, any(250), anx(150), any(50), "INV_SLOT_FOCUS.TGA", "", windowLogin);
+local buttonLoginLeftUpperCorner = GUI.Button(0, 0, anx(50), any(50), "INV_SLOT_FOCUS.TGA", "", windowLogin);
+local buttonLoginUpperInfo = GUI.Button(anx(50), 0, anx(400), any(50), "INV_SLOT_FOCUS.TGA", "LOGOWANIE", windowLogin);
+local buttonLoginExit = GUI.Button(anx(450), 0, anx(50), any(50), "INV_SLOT_FOCUS.TGA", "X", windowLogin);
+local buttonLoginLoginInfo = GUI.Button(0, any(50), anx(150), any(100), "INV_SLOT_FOCUS.TGA", "LOGIN", windowLogin);
+local loginLoginInput = GUI.Input(anx(150), any(50), anx(348), any(98), "DLG_CONVERSATION.TGA", "FONT_OLD_20_WHITE_HI.TGA", Input.Text, Align.Center, ">               ", 2, windowLogin);
+local buttonLoginPwdInfo = GUI.Button(0, any(150), anx(150), any(100), "INV_SLOT_FOCUS.TGA", "HAS£O", windowLogin);
+local loginPasswordInput = GUI.Input(anx(150), any(150), anx(348), any(98), "DLG_CONVERSATION.TGA", "FONT_OLD_20_WHITE_HI.TGA", Input.Password, Align.Center, ">               ", 2, windowLogin);
+local buttonLoginLeftBottomCorner = GUI.Button(0, any(250), anx(150), any(50), "INV_SLOT_FOCUS.TGA", "", windowLogin);
 local buttonLoginDo = GUI.Button(anx(150), any(250), anx(350), any(50), "INV_SLOT_FOCUS.TGA", "ZALOGUJ", windowLogin);
-local buttonExitInfo = GUI.Button(anx(500), -any(50), anx(150), any(50), "INV_SLOT_FOCUS.TGA", "WyjdŸ z gry", windowLogin);
+local buttonLoginExitInfo = GUI.Button(anx(500), -any(50), anx(150), any(50), "INV_SLOT_FOCUS.TGA", "WyjdŸ z gry", windowLogin);
 
 // Feedback window
 // It's used for displaying informations about user's requests (registering). 
-local windowFeedback = GUI.Window(4096 - anx(250), 4096 - any(175), anx(500), any(300), "MENU_INGAME.TGA", null, true);
-local buttonRegisterStatusInfoClose = GUI.Button(anx(450), 0, anx(50), any(25), "INV_SLOT_FOCUS.TGA", "X", windowFeedback);
-local drawRegisterStatusInfo = GUI.Draw(anx(30), any(120), "", windowFeedback);
+local windowRegisterFeedback = GUI.Window(4096 - anx(250), 4096 - any(325), anx(500), any(300), "MENU_INGAME.TGA", null, true);
+local buttonRegisterWindowFeedbackClose = GUI.Button(anx(450), 0, anx(50), any(25), "INV_SLOT_FOCUS.TGA", "X", windowRegisterFeedback);
+local drawRegisterFeedback = GUI.Draw(anx(30), any(120), "", windowRegisterFeedback);
+// It's used for displaying informations about user's requests (login). 
+local windowLoginFeedback = GUI.Window(4096 - anx(250), 4096 + any(25), anx(500), any(300), "MENU_INGAME.TGA", null, true);
+local buttonLoginWindowFeedbackClose = GUI.Button(anx(450), 0, anx(50), any(25), "INV_SLOT_FOCUS.TGA", "X", windowLoginFeedback);
+local drawLoginFeedback = GUI.Draw(anx(30), any(120), "", windowLoginFeedback);
 
-// -------------------- FEEDBACK WINDOW -------------------- //
-// Functions for displaying or hiding feedback window
-function displayWindowFeedback (info) {
-	drawRegisterStatusInfo.setText(info);
-	windowRegister.setVisible(false);
-	windowFeedback.setVisible(true);
-	buttonRegisterStatusInfoClose.setVisible(true);
+// -------------------- DISPLAY BACKGROUND IMAGE -------------------- //
+function displayBgImage () {
+    bgImage.setVisible(true);
+    bgImage.setScaling(true);
+    enableHud (HUD_HEALTH_BAR, false); // Hide bar, that covering background.
 }
-function hideWindowFeedback () {
-	drawRegisterStatusInfo.setText("");
-	windowFeedback.setVisible(false);
-	windowRegister.setVisible(true);
-}
+addEventHandler("onInit", displayBgImage);
+
+// --------------------  PROCESS REGISTER REQUEST -------------------- //
+local RegPPCInst = ProcessPanelClient (registerLoginInput, registerPasswordInput);
+
+// -------------------- PROCESS LOGIN REQUEST -------------------- //
+local LogPPCInst = ProcessPanelClient (loginLoginInput, loginPasswordInput);
 
 // -------------------- INTERACTING WITH REGISTER WINDOW -------------------- //
-local interactingWindowRegister = {
+function displayWindowRegisterFeedback (msg) {
+    drawRegisterFeedback.setText(msg);
+    windowRegister.setVisible(false);
+    windowRegisterFeedback.setVisible(true);
+    buttonRegisterWindowFeedbackClose.setVisible(true);
+}
 
+function hideWindowRegisterFeedback () {
+    drawRegisterFeedback.setText("");
+    windowRegisterFeedback.setVisible(false);
+    windowRegister.setVisible(true);
+    buttonRegisterExitInfo.setVisible(false);
+}
+
+// This table contains function for 5 event handlers.
+local interactingWindowRegister = {
 	// Displaying register window after "onInit" event. "Initialize" table for handling requests from register panel.
-	"onInitWindowRegister" : function () {
+	"onInitWindow" : function () {
+        disableControls(true);
 		setCursorVisible(true);
 		windowRegister.setVisible(true);
 		// This window describes the operation of the button "X". It should be visible only after hovering the cursor over the button.
 		buttonRegisterExitInfo.setVisible(false);
 		registerLoginInput.setDisabled(false);
 		registerPasswordInput.setDisabled(false);
-		windowFeedback.setVisible(false);
-		registerAccountClient.init(registerLoginInput, registerPasswordInput);
+		windowRegisterFeedback.setVisible(false);
 	},
 
 	// Handling clicking on register window.
-	"onClickWindowRegister" : function (self) {
+	"onClickWindow" : function (self) {
 		switch (self) {
-			case buttonRegisterClose:
+			case buttonRegisterExit:
 				exitGame();
 				break;
 				
 			case buttonRegisterDo:
-				registerAccountClient.refreshInputsData();
-				if (registerAccountClient.checkRequirements()) {
-					registerAccountClient.sendRequestToServer();
+                // TEST
+                // END TEST
+				RegPPCInst.refreshInputsData();
+				if (RegPPCInst.checkLoginPwdRequirements()) {
+					RegPPCInst.sendRequestToServer("register");
 				} else {
-					displayWindowFeedback (registerAccountClient.getFeedbackMsg());
+					displayWindowRegisterFeedback (RegPPCInst.getFeedbackMsg());
 				}
 				break;
 			
-			case buttonRegisterStatusInfoClose:
-				if (windowFeedback.getVisible()) {
-					hideWindowFeedback();
+			case buttonRegisterWindowFeedbackClose:
+				if (windowRegisterFeedback.getVisible()) {
+					hideWindowRegisterFeedback();
 				}
 				break;
 		}
 	},
 
 	// Handling driving the mouse in register window.
-	"onMouseInWindowRegister" : function (self) {
+	"onMouseInWindow" : function (self) {
 		switch (self) {
-			case buttonRegisterDo:
-				self.setColor(255, 0, 0);
-				break;
-			
-			case buttonRegisterClose:
+            case buttonRegisterExit:
 				self.setColor(255, 0, 0);
 				buttonRegisterExitInfo.setVisible(true);
 				break;
+                
+			case buttonRegisterDo:
+				self.setColor(255, 0, 0);
+				break;
 				
-			case buttonRegisterStatusInfoClose:
-				if (buttonRegisterStatusInfoClose.getVisible()) {
+			case buttonRegisterWindowFeedbackClose:
+				if (self.getVisible()) {
 					self.setColor(255, 0, 0);
 				}
 				break;
@@ -105,19 +128,19 @@ local interactingWindowRegister = {
 	},
 
 	// Handling driving the mouse out of register window.
-	"onMouseOutWindowRegister" : function (self) {
+	"onMouseOutWindow" : function (self) {
 		switch (self) {
-			case buttonRegisterDo:
-				self.setColor(255, 255, 255);
-				break;
-			
-			case buttonRegisterClose:
+            case buttonRegisterExit:
 				self.setColor(255, 255, 255);
 				buttonRegisterExitInfo.setVisible(false);
 				break;
+                
+			case buttonRegisterDo:
+				self.setColor(255, 255, 255);
+				break;
 				
-			case buttonRegisterStatusInfoClose:
-				if (buttonRegisterStatusInfoClose.getVisible()) {
+			case buttonRegisterWindowFeedbackClose:
+				if (self.getVisible()) {
 					self.setColor(255, 255, 255);
 				}
 				break;
@@ -125,78 +148,131 @@ local interactingWindowRegister = {
 	},
 
 	//Display data about registration request.
-	"onPacketRegistrationResponse" : function (packet) {
+	"onPacketResponse" : function (packet) {
 		local packetId = packet.readUInt16();
 		switch (packetId) {
-			case PacketsIds.REGISTER_PWDLOGIN_TO_CLIENT_RESPONSE:
-				Chat.print(0, 255, 0, "ReturnedFromServer"); // TEST
-				displayWindowFeedback(packet.readString());
+			case PacketsIds.REGISTER_ACC_RESPONSE_TO_CLIENT:
+				displayWindowRegisterFeedback(packet.readString());
 				break;
 		}
 	}
 };
 
 // Attach event handlers.
-addEventHandler("onInit", interactingWindowRegister.onInitWindowRegister);
-addEventHandler("GUI.onClick", interactingWindowRegister.onClickWindowRegister);
-addEventHandler("GUI.onMouseIn", interactingWindowRegister.onMouseInWindowRegister);
-addEventHandler("GUI.onMouseOut", interactingWindowRegister.onMouseOutWindowRegister);
-addEventHandler("onPacket", interactingWindowRegister.onPacketRegistrationResponse);
+addEventHandler("onInit", interactingWindowRegister.onInitWindow);
+addEventHandler("GUI.onClick", interactingWindowRegister.onClickWindow);
+addEventHandler("GUI.onMouseIn", interactingWindowRegister.onMouseInWindow);
+addEventHandler("GUI.onMouseOut", interactingWindowRegister.onMouseOutWindow);
+addEventHandler("onPacket", interactingWindowRegister.onPacketResponse);
 
 // -------------------- INTERACTING WITH LOGIN WINDOW -------------------- //
-local interactingWindowLogin = {
+function displayWindowLoginFeedback (msg) {
+    drawLoginFeedback.setText(msg);
+    windowLogin.setVisible(false);
+    windowLoginFeedback.setVisible(true);
+    buttonLoginWindowFeedbackClose.setVisible(true);
+}
+
+function hideWindowLoginFeedback() {
+    drawLoginFeedback.setText("");
+    windowLoginFeedback.setVisible(false);
+    windowLogin.setVisible(true);
+    buttonLoginExitInfo.setVisible(false);
+}
+
+// This table contains function for 5 event handlers.
+local interactingWindowLogin = {    
 	// Displaying login window after "onInit" event.
-	"onInitWindowLogin" : function () {
-		setCursorVisible(true);
-		windowLogin.setVisible(true);
-		loginInput.setDisabled(false);
-		passwordInput.setVisible(true);
+	"onInitWindow" : function () {
+        windowLogin.setVisible(true);
+		loginLoginInput.setDisabled(false);
+		loginPasswordInput.setVisible(true);
 		//Q: Czemu trzeba ustawiæ akurat ten input osobno na "visible"; a ¿eby by³o widaæ resztê, wystarczy³o ustawiæ na "visible" 'window'?
 		//Q c.d.: Bo by³ to ostatni zdefiniowany input?
-		passwordInput.setDisabled(false);
-		buttonExitInfo.setVisible(false);
+		loginPasswordInput.setDisabled(false);
+		buttonLoginExitInfo.setVisible(false);
+        windowLoginFeedback.setVisible(false);
 	},
 
 	// Handling clicking on login window.
-	"onClickWindowLogin" : function (self) {
+	"onClickWindow" : function (self) {
 		switch (self) {
-			case buttonClose:
+			case buttonLoginExit:
 				exitGame();
+				break;
+            case buttonLoginDo:
+				LogPPCInst.refreshInputsData();
+                // If login and password don't meet requirements, then it's impossible, that given login and password exist in database.
+                // So if below checking return false, then it's mean, that user with given login and password doesn't exist.
+				if (LogPPCInst.checkLoginPwdRequirements()) {
+					LogPPCInst.sendRequestToServer("login");
+				} else {
+					displayWindowLoginFeedback (LogPPCInst.getFeedbackMsg());
+				}
+				break;
+			
+			case buttonLoginWindowFeedbackClose:
+				if (windowLoginFeedback.getVisible()) {
+					hideWindowLoginFeedback();
+				}
 				break;
 		}
 	},
 
 	// Handling driving the mouse in login window.
-	"onMouseInWindowLogin" : function (self) {
-		if (!(self instanceof GUI.Button)) {
-			return;
-		}
-		
-		if (self == buttonLoginDo) {
-			self.setColor(255, 0, 0);
-		} else if (self == buttonClose) {
-			self.setColor(255, 0, 0);
-			buttonExitInfo.setVisible(true);
+	"onMouseInWindow" : function (self) {
+		switch (self) {
+            case buttonLoginExit:
+				self.setColor(255, 0, 0);
+				buttonLoginExitInfo.setVisible(true);
+				break;
+                
+			case buttonLoginDo:
+				self.setColor(255, 0, 0);
+				break;
+				
+			case buttonLoginWindowFeedbackClose:
+				if (self.getVisible()) {
+					self.setColor(255, 0, 0);
+				}
+				break;
 		}
 	},
 
 	// Handling driving the mouse out of login window.
-	"onMouseOutWindowLogin" : function (self) {
-		if (!(self instanceof GUI.Button)) {
-			return;
+	"onMouseOutWindow" : function (self) {
+		switch (self) {
+            case buttonLoginExit:
+				self.setColor(255, 255, 255);
+				buttonLoginExitInfo.setVisible(false);
+				break;
+                
+			case buttonLoginDo:
+				self.setColor(255, 255, 255);
+				break;
+				
+			case buttonLoginWindowFeedbackClose:
+				if (self.getVisible()) {
+					self.setColor(255, 255, 255);
+				}
+				break;
 		}
-		
-		if (self == buttonLoginDo) {
-			self.setColor(255, 255, 255);
-		} else if (self == buttonClose) {
-			self.setColor(255, 255, 255);
-			buttonExitInfo.setVisible(false);
+	}
+    
+    //Display data about login request.
+	"onPacketResponse" : function (packet) {
+		local packetId = packet.readUInt16();
+		switch (packetId) {
+			case PacketsIds.LOGIN_ACC_RESPONSE_TO_CLIENT:
+				displayWindowLoginFeedback(packet.readString());
+				break;
 		}
 	}
 };
 
 // Attach event handlers.
-addEventHandler("onInit", interactingWindowLogin.onInitWindowLogin);
-addEventHandler("GUI.onClick", interactingWindowLogin.onClickWindowLogin);
-addEventHandler("GUI.onMouseIn", interactingWindowLogin.onMouseInWindowLogin);
-addEventHandler("GUI.onMouseOut", interactingWindowLogin.onMouseOutWindowLogin);
+addEventHandler("onInit", interactingWindowLogin.onInitWindow);
+addEventHandler("GUI.onClick", interactingWindowLogin.onClickWindow);
+addEventHandler("GUI.onMouseIn", interactingWindowLogin.onMouseInWindow);
+addEventHandler("GUI.onMouseOut", interactingWindowLogin.onMouseOutWindow);
+addEventHandler("onPacket", interactingWindowLogin.onPacketResponse);

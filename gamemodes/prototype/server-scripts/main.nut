@@ -1,4 +1,4 @@
-function onPlayerJoin(pid)
+function onPlayerLogin(pid)
 {
 	sendMessageToAll(0, 255, 0, getPlayerName(pid) + " connected with the server.")
 
@@ -32,6 +32,10 @@ function onPlayerJoin(pid)
 	
 	spawnPlayer(pid)
 	setPlayerPosition(pid, 0, 0, 0)
+}
+
+function onPlayerJoin(pid) {
+    print("Works");
 }
 
 addEventHandler("onPlayerJoin", onPlayerJoin)
