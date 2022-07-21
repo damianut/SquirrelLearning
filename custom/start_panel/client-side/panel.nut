@@ -38,11 +38,15 @@ local windowLoginFeedback = GUI.Window(4096 - anx(250), 4096 + any(25), anx(500)
 local buttonLoginWindowFeedbackClose = GUI.Button(anx(450), 0, anx(50), any(25), "INV_SLOT_FOCUS.TGA", "X", windowLoginFeedback);
 local drawLoginFeedback = GUI.Draw(anx(30), any(120), "", windowLoginFeedback);
 
-// -------------------- DISPLAY BACKGROUND IMAGE -------------------- //
+// -------------------- DISPLAY/HIDE BACKGROUND IMAGE -------------------- //
 function displayBgImage () {
     bgImage.setVisible(true);
     bgImage.setScaling(true);
     enableHud (HUD_HEALTH_BAR, false); // Hide bar, that covering background.
+}
+function hideBgImage () {
+    bgImage.setVisible(false);
+    enableHud (HUD_HEALTH_BAR, true);
 }
 addEventHandler("onInit", displayBgImage);
 
@@ -65,6 +69,9 @@ function hideWindowRegisterFeedback () {
     windowRegisterFeedback.setVisible(false);
     windowRegister.setVisible(true);
     buttonRegisterExitInfo.setVisible(false);
+    // Reset inputs
+    registerLoginInput.setText("");
+	registerPasswordInput.setText("");
 }
 
 // This table contains function for 5 event handlers.
@@ -171,6 +178,9 @@ function displayWindowLoginFeedback (msg) {
     windowLogin.setVisible(false);
     windowLoginFeedback.setVisible(true);
     buttonLoginWindowFeedbackClose.setVisible(true);
+    // Reset inputs
+    loginLoginInput.setText("");
+	loginPasswordInput.setText("");
 }
 
 function hideWindowLoginFeedback() {
@@ -266,6 +276,14 @@ local interactingWindowLogin = {
 			case PacketsIds.LOGIN_ACC_RESPONSE_TO_CLIENT:
 				displayWindowLoginFeedback(packet.readString());
 				break;
+            case PacketsIds.LOGIN_ACC_DO:
+                hideBgImage();
+                disableControls(false);
+                setCursorVisible(false);
+                windowRegister.setVisible(false);
+                windowLogin.setVisible(false);
+                Chat.setVisible(true);
+                break;
 		}
 	}
 };

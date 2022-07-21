@@ -20,8 +20,8 @@ class ProcessPanelClient extends ProcessPanelCommon {
         if (("register" == requestType) || ("login" == requestType)) {
             local EnumHeader = ("register" == requestType) ?
                 PacketsIds.REGISTER_ACC_REQUEST_TO_SERVER : PacketsIds.LOGIN_ACC_REQUEST_TO_SERVER;
-            local packet = Packet(EnumHeader);
-            packet.writeUInt16();
+            local packet = Packet();
+            packet.writeUInt16(EnumHeader);
             packet.writeString(_login);
             packet.writeString(_pwd);
                 
