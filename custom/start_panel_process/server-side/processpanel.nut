@@ -11,6 +11,9 @@ class ProcessPanelServer extends ProcessPanelCommon {
         local packetId = packet.readUInt16();
         switch (packetId) {
             case PacketsIds.REGISTER_ACC_REQUEST_TO_SERVER:
+                // TEST
+
+                // END TEST
                 // Login and password are saved in packet after packetId.
                 refresh(packet.readString(), packet.readString());
                 // I check the login and password again if the player has influenced the data after the first check and before sending the request.

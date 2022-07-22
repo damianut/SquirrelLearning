@@ -1,4 +1,4 @@
-// (Code from https://gitlab.com/GothicMultiplayerTeam/modules/sqlite)
+// (Below code is based on https://gitlab.com/GothicMultiplayerTeam/modules/sqlite)
 class PlayerDBHandling {
     _db = null;
     _dbName = null;
@@ -9,12 +9,16 @@ class PlayerDBHandling {
 		_db = SQLite3(dbName);
     }
     
+    function isOpen () {
+        return _db.isOpen;
+    }
+    
     function close () {
-        return _db.isOpen ? (SQLITE_OK == _db.close()) : false;
+        return isOpen() ? (SQLITE_OK == _db.close()) : false;
     }
     
     function open () {
-        return _db.isOpen ? false : (SQLITE_OK == _db.open(_dbName));
+        return isOpen() ? false : (SQLITE_OK == _db.open(_dbName));
     }
 
     function createDatabaseStructure() {
@@ -42,9 +46,9 @@ class PlayerDBHandling {
                 stmt.bindValue(":posZ", 0)
 
                 _db.execute("BEGIN")
-                local result = stmt.step()
+                local resultStmt = stmt.step()
 
-                if(result == SQLITE_DONE)
+                if(resultStmt == SQLITE_DONE)
                     _db.execute("COMMIT")
                 else {
                     _db.execute("ROLLBACK")
@@ -54,36 +58,42 @@ class PlayerDBHandling {
         }
     }
 
-    function saveCharacter(id, name) {
-        if(_db) {
-            local stmt = _db.prepare(@"UPDATE characters SET hp=:hp, maxHP=:maxhp, mana=:mana, maxMana=:maxmana, posX=:posX, posY=:posY, posZ=:posZ WHERE name=:name")
-
-            if(!stmt) {
-                print("Cannot create prepared statement!")
-                print(_db.lastErrorMsg)
+    function saveCharacter(id) {
+        local result = false;
+        do {
+            if (!_db) {
+                break;
             }
-            else {
-                local pos = getPlayerPosition(id)
-                stmt.bindValue(":hp", getPlayerHealth(id))
-                stmt.bindValue(":maxhp", getPlayerMaxHealth(id))
-                stmt.bindValue(":mana", getPlayerMana(id))
-                stmt.bindValue(":maxmana", getPlayerMaxMana(id))
-                stmt.bindValue(":posX", pos.x)
-                stmt.bindValue(":posY", pos.y)
-                stmt.bindValue(":posZ", pos.z)
-                stmt.bindValue(":name", name)
-
-                _db.execute("BEGIN")
-                local result = stmt.step()
-
-                if(result == SQLITE_DONE)
-                    _db.execute("COMMIT")
-                else {
-                    _db.execute("ROLLBACK")
-                    error(format("Cannot insert character information into database! %s", _db.LastErrorMsg))
-                }
+            local stmt = _db.prepare(@"UPDATE characters SET hp=:hp, maxHP=:maxhp, mana=:mana, maxMana=:maxmana, posX=:posX, posY=:posY, posZ=:posZ WHERE name=:name");
+            if (!stmt) {
+                print("Cannot create prepared statement!");
+                print(_db.lastErrorMsg);
+                break;
             }
-        }
+            local pos = getPlayerPosition(id);
+            local name = getPlayerName(id);
+            stmt.bindValue(":hp", getPlayerHealth(id));
+            stmt.bindValue(":maxhp", getPlayerMaxHealth(id));
+            stmt.bindValue(":mana", getPlayerMana(id));
+            stmt.bindValue(":maxmana", getPlayerMaxMana(id));
+            stmt.bindValue(":posX", pos.x);
+            stmt.bindValue(":posY", pos.y);
+            stmt.bindValue(":posZ", pos.z);
+            stmt.bindValue(":name", name);
+
+            _db.execute("BEGIN")
+            local resultStmt = stmt.step()
+
+            if (SQLITE_DONE != resultStmt) {
+                _db.execute("ROLLBACK");
+                error(format("Cannot insert character information into database! %s", _db.LastErrorMsg));
+                break;
+            }
+            _db.execute("COMMIT");
+            result = true;
+        } while (false);
+        
+        return result;
     }
 
     function loadCharacter(id, playerName) {

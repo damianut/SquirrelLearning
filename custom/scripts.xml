@@ -1,10 +1,15 @@
 <server>
+    <!-- Main code -->
 	<script src="main.nut" type="server" />
 	<script src="main.nut" type="client" />
 	<script src="database_process/server-side/user.nut" type="server" />
+    <!-- Start panel (login and register) -->
 	<script src="start_panel_process/processpanel_common.nut" type="server" />
 	<script src="start_panel_process/processpanel_common.nut" type="client" />
 	<script src="start_panel_process/server-side/processpanel.nut" type="server" />
 	<script src="start_panel_process/client-side/processpanel.nut" type="client" />
 	<script src="start_panel/client-side/panel.nut" type="client" />
+    <!-- While game-->
+    <script src="while_game/client-side/exitgame.nut" type="client" />
+    <script src="while_game/server-side/exitgame.nut" type="server" />
 </server>

@@ -280,8 +280,17 @@ local interactingWindowLogin = {
                 hideBgImage();
                 disableControls(false);
                 setCursorVisible(false);
-                windowRegister.setVisible(false);
                 windowLogin.setVisible(false);
+                if (windowRegister.getVisible()) {
+                    windowRegister.setVisible(false);
+                }
+                if (windowLoginFeedback.getVisible()) {
+                    windowLoginFeedback.setVisible(false);
+                }
+                if (windowRegisterFeedback.getVisible()) {
+                    windowRegisterFeedback.setVisible(false);
+                }
+                
                 Chat.setVisible(true);
                 break;
 		}
