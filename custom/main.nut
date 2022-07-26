@@ -10,3 +10,9 @@ enum PacketsIds
     // Exit game
     EXIT_PLAYER_DATA_TO_SERVER
 }
+
+// Processing string
+// Check that string contains only alphanumeric chars.
+function regexpAlphanumericOnly (str) {
+    return !regexp(@"\W+").capture(str);
+}

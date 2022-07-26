@@ -1,11 +1,11 @@
 // Base class for handling register and login account requests.
 class ProcessPanelCommon {
     _msgs = [
-        "Login should contains from 4 to 15 chars.", // "Login powinien zawierać od 4 do 15 znaków."
-        "Password should contains from 8 to 20 chars.", // "Hasło powinno zawierać od 8 do 20 znaków."
+        "Login should contains from 4 to 15 chars. And only consist of numbers and letters.", // "Login powinien zawierać od 4 do 15 znaków. I składać się tylko z cyfr i liter."
+        "Password should contains from 8 to 20 chars. And only consist of numbers and letters.", // "Hasło powinno zawierać od 8 do 20 znaków. I składać się tylko z cyfr i liter."
         "The account has been created.", // "Konto zostało utworzone."
         "The given login is taken.", // "Podany login jest zajęty."
-        "The account with given login isn't exist.", //"Konto z podanym loginem nie istnieje."
+        "The account with given login isn't exist.", // "Konto z podanym loginem nie istnieje."
         "Given password isn't correct." // "Podane hasło jest nieprawdiłowe."
     ];
     _login = null;
@@ -47,16 +47,16 @@ class ProcessPanelCommon {
     function _checkLoginConstraints () {
         return (
             (4 <= _login.len()) &&
-            (15 >= _login.len())// &&
-            //Czy tutaj też dać wyrażenie regularne?
+            (15 >= _login.len()) &&
+            regexpAlphanumericOnly(_login)
         );
     }
     
     function _checkPwdConstraints () {
         return (
             (8 <= _pwd.len()) &&
-            (20 >= _pwd.len())// &&
-            //Czy tutaj też dać wyrażenie regularne?
+            (20 >= _pwd.len()) &&
+            regexpAlphanumericOnly(_pwd)
         );
     }
 }

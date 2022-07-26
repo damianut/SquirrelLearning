@@ -2,7 +2,7 @@ function onInit()
 {
     setKeyLayout(KEY_LAYOUT_PL);
 	enableEvent_Render(true); // Enable execution of eventRender (on each frame).
-    Chat.setVisible(false); // Player can see chat only after login account.
+    // Chat.setVisible(false); // Player can see chat only after login account.
 }
 
 addEventHandler("onInit", onInit)

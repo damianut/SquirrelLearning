@@ -1,6 +1,7 @@
 <server>
     <!-- Main code -->
 	<script src="main.nut" type="server" />
+    <script src="main_server.nut" type="server" />
 	<script src="main.nut" type="client" />
 	<script src="database_process/server-side/user.nut" type="server" />
     <!-- Start panel (login and register) -->
